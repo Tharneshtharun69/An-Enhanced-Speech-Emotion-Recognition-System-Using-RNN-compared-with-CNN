@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detection</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .recording-pulse {
+            animation: pulse 2s infinite;
+        }
+        .gradient-background {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .wave-animation {
+            position: relative;
+            overflow: hidden;
+        }
+        .wave-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            animation: rotate 8s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(132, 250, 176, 0.6), 0 0 40px rgba(143, 211, 244, 0.6);
+        }
+        .hover-glow:hover {
+            box-shadow: 0 0 30px rgba(132, 250, 176, 0.8), 0 0 60px rgba(143, 211, 244, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 min-h-screen overflow-x-hidden">
+    <div class="container mx-auto px-4 py-12 max-w-6xl">
+        <!-- Enhanced Header Section -->
+        <header class="text-center mb-20 relative">
+            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-100 rounded-full filter blur-3xl opacity-30 float-animation"></div>
+            <div class="relative">
+                <div class="inline-block p-4 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full mb-6 shadow-lg hover-scale">
+                    <i class="fas fa-brain text-5xl text-blue-600"></i>
+                </div>
+                <h1 class="text-6xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-transparent bg-clip-text mb-6">
+                    Emotion Detection AI
+                </h1>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                    Harness the power of AI to understand emotions in your voice
+                    <span class="block mt-2 text-sm text-gray-500">Powered by advanced machine learning algorithms</span>
+                </p>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="grid md:grid-cols-2 gap-12">
+            <!-- Enhanced Upload Section -->
+            <div class="glass-effect rounded-3xl shadow-xl p-10 hover-scale hover-glow">
+                <form action="/upload" method="post" enctype="multipart/form-data" class="space-y-8">
+                    <div class="text-center mb-8">
+                        <div class="inline-block p-4 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full mb-6 wave-animation">
+                            <i class="fas fa-cloud-upload-alt text-4xl text-blue-600"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-gray-800 mb-3">Upload Audio</h2>
+                        <p class="text-gray-600">Transform your pre-recorded audio into emotional insights</p>
+                    </div>
+
+                    <div class="border-3 border-dashed border-blue-200 rounded-2xl p-10 text-center hover:border-blue-400 transition-all duration-300 bg-blue-50/50 group relative overflow-hidden">
+                        <input type="file" name="audio_file" accept="audio/*" required class="hidden" id="audio_file">
+                        <label for="audio_file" class="cursor-pointer block relative z-10">
+                            <div class="text-gray-600 group-hover:text-blue-600 transition-colors duration-300">
+                                <i class="fas fa-file-audio text-6xl mb-6 group-hover:scale-110 transform transition-transform duration-300"></i>
+                                <p class="text-xl font-medium mb-2">Drop your audio file here</p>
+                                <p class="text-sm text-gray-500">or click to browse</p>
+                                <div class="mt-6 text-xs text-gray-400 space-y-1">
+                                    <p><i class="fas fa-check-circle mr-2"></i>Supports MP3, WAV, M4A, AAC</p>
+                                    <p><i class="fas fa-check-circle mr-2"></i>Max file size: 10MB</p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <button type="submit" 
+                            class="w-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 text-white py-5 px-8 rounded-xl hover:from-blue-600 hover:to-blue-800 transition duration-300 flex items-center justify-center group shadow-lg">
+                        <i class="fas fa-upload mr-3 group-hover:scale-110 transform transition-transform duration-300"></i>
+                        <span class="text-lg font-medium">Analyze Audio</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Enhanced Record Section -->
+            <div class="glass-effect rounded-3xl shadow-xl p-10 hover-scale hover-glow">
+                <form action="/record" method="get" class="space-y-8">
+                    <div class="text-center mb-8">
+                        <div class="inline-block p-4 bg-gradient-to-br from-red-100 to-red-200 rounded-full mb-6 wave-animation">
+                            <i class="fas fa-microphone text-4xl text-red-600"></i>
+                        </div>
+                        <h2 class="text-3xl font-bold text-gray-800 mb-3">Record Audio</h2>
+                        <p class="text-gray-600">Capture and analyze emotions in real-time</p>
+                    </div>
+
+                    <div class="text-center p-10 bg-red-50/50 rounded-2xl relative overflow-hidden">
+                        <div class="recording-pulse inline-block p-10 rounded-full bg-gradient-to-br from-red-100 to-red-200 mb-6">
+                            <i class="fas fa-microphone-alt text-6xl text-red-600"></i>
+                        </div>
+                        <p class="text-gray-600 text-lg mb-6">Professional-grade audio recording</p>
+                        <div class="space-y-3 text-sm text-gray-500">
+                            <p class="flex items-center justify-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                Advanced noise reduction
+                            </p>
+                            <p class="flex items-center justify-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                Real-time emotion processing
+                            </p>
+                            <p class="flex items-center justify-center">
+                                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                                High-fidelity audio capture
+                            </p>
+                        </div>
+                    </div>
+
+                    <button type="submit" 
+                            class="w-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 text-white py-5 px-8 rounded-xl hover:from-red-600 hover:to-red-800 transition duration-300 flex items-center justify-center group shadow-lg">
+                        <i class="fas fa-microphone-alt mr-3 group-hover:scale-110 transform transition-transform duration-300"></i>
+                        <span class="text-lg font-medium">Start Recording</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Enhanced Features Section -->
+        <div class="mt-20 grid md:grid-cols-3 gap-8">
+            <div class="glass-effect p-8 rounded-2xl shadow-lg hover-scale hover-glow">
+                <div class="inline-block p-4 bg-gradient-to-br from-purple-100 to-purple-200 rounded-full mb-6 wave-animation">
+                    <i class="fas fa-bolt text-3xl text-purple-600"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Real-time Analysis</h3>
+                <p class="text-gray-600 leading-relaxed">Experience instantaneous emotion detection with our advanced AI processing engine</p>
+            </div>
+            <div class="glass-effect p-8 rounded-2xl shadow-lg hover-scale hover-glow">
+                <div class="inline-block p-4 bg-gradient-to-br from-green-100 to-green-200 rounded-full mb-6 wave-animation">
+                    <i class="fas fa-chart-line text-3xl text-green-600"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Detailed Reports</h3>
+                <p class="text-gray-600 leading-relaxed">Get comprehensive emotional analysis with detailed insights and visualizations</p>
+            </div>
+            <div class="glass-effect p-8 rounded-2xl shadow-lg hover-scale hover-glow">
+                <div class="inline-block p-4 bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-full mb-6 wave-animation">
+                    <i class="fas fa-shield-alt text-3xl text-yellow-600"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-3">Privacy First</h3>
+                <p class="text-gray-600 leading-relaxed">Your data is protected with enterprise-grade security and encryption</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced GSAP animations
+        gsap.from("header", {
+            duration: 1.2,
+            y: -60,
+            opacity: 0,
+            ease: "power4.out"
+        });
+        
+        gsap.from(".grid > div", {
+            duration: 1,
+            y: 60,
+            opacity: 0,
+            stagger: 0.3,
+            ease: "power3.out"
+        });
+
+        gsap.from(".mt-20 > div", {
+            duration: 0.8,
+            scale: 0.8,
+            opacity: 0,
+            stagger: 0.2,
+            ease: "back.out(1.7)",
+            scrollTrigger: {
+                trigger: ".mt-20",
+                start: "top center+=100",
+                toggleActions: "play none none reverse"
+            }
+        });
+
+        // Enhanced file upload interaction
+        const fileInput = document.getElementById('audio_file');
+        const uploadLabel = fileInput.nextElementSibling;
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                const fileName = e.target.files[0].name;
+                uploadLabel.querySelector('p').innerHTML = `
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                    Selected: ${fileName}
+                `;
+            }
+        });
+
+        // Enhanced drag and drop functionality
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadLabel.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadLabel.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadLabel.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            uploadLabel.classList.add('bg-blue-100/50');
+            uploadLabel.querySelector('i').classList.add('scale-110');
+        }
+
+        function unhighlight(e) {
+            uploadLabel.classList.remove('bg-blue-100/50');
+            uploadLabel.querySelector('i').classList.remove('scale-110');
+        }
+
+        uploadLabel.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            fileInput.files = files;
+            
+            if (files.length > 0) {
+                const fileName = files[0].name;
+                uploadLabel.querySelector('p').innerHTML = `
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                    Selected: ${fileName}
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
