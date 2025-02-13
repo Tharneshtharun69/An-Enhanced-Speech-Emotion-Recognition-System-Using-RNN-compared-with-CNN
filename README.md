@@ -1,6 +1,6 @@
 To run RNN CODE:
 open the folder in file manager and copy the path.In the folder's address bar type cmd
-type the following command in the command prompt and open the url that comes in the command prompt in webtbrowser to predict the speech emotion using rnn algorithm with live speech data as well as pre recorded speech data
+type the following command in the command prompt and open the url that comes in the command prompt in web browser to predict the speech emotion using rnn algorithm with live speech data as well as pre recorded speech data
 COMMAND:
 python app.py 
 the above is done using rnn algorithm.
